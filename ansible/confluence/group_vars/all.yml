@@ -1,0 +1,43 @@
+# conflunce
+
+user: hf-wiki
+admin: root
+vgname: vg1
+service: confluence
+lvname: VarConfluence
+device: /dev/mapper/vg1-VarConfluence
+storagePath: /var/confluence
+installPath: /opt/confluence/
+tarpath: /opt/confluence/atlassian-confluence-7.3.3.tar.gz
+initfile: files/confluence
+inid: /etc/init.d/confluence
+application: files/atlassian-confluence-7.3.3.tar.gz
+ln_path: /opt/confluence/atlassian-confluence-7.3.3
+ln_destpath: /opt/confluence/current
+ln_permissions: /opt/gogs/current/
+logPath: /opt/confluence/current/logs
+VarLog: /var/log/confluence
+
+conflocation: /opt/confluence/current/conf/Standalone/localhost
+templocation: /opt/confluence/current/temp
+worklocation: /opt/confluence/current/work
+
+# disk
+new_disk: /dev/sdb
+create_vgname: vg1
+create_lvname: VarConfluence
+create_lvsize: 15G
+filesystem: xfs
+new_mntp: /var/confluence
+
+# must be set to true in order to execute any tasks in play (failsafe option :)- )
+#config_lvm: false
+config_lvm: true
+# set to true if creating a new logical volume (do not set extend or resize to true)
+#create: false
+create: true
+# set to true if resizing the logical volume (do not set create to true)
+#resize: false
+resize: true
+#extend: false
+extend: true

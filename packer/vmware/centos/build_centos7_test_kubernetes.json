@@ -1,0 +1,70 @@
+{
+  "builders": [
+    {
+      "CPUs": 1,
+      "CPU_hot_plug": true,
+      "RAM": 1024,
+      "RAM_reserve_all": true,
+      "RAM_hot_plug":true,
+      "boot_command": [
+         "<tab><wait>",
+         " ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks_test_kube_master.cfg<enter>"
+       ],
+      "cluster": "cluster01",
+      "convert_to_template": false,
+      "datacenter": "yourdatacenter",
+      "datastore": "vmstor01_darkstar",
+      "disk_controller_type": "pvscsi",
+      "floppy_files": [
+        "./http/ks_test_kube_master.cfg"
+      ],
+      "guest_os_type": "centos7_64Guest",
+      "host": "esxiip",
+      "insecure_connection": "true",
+      "iso_paths": [
+        "[iso] CentOS-7-x86_64-Minimal-1908.iso"
+      ],
+      "network_adapters": [
+        {
+          "network": "test",
+          "network_card": "vmxnet3"
+        }
+      ],
+      "notes": "Build via Packer",
+      "password": "yourpass",
+      "resource_pool": "pool01",
+      "folder": "Discovered virtual machine",
+      "ssh_username": "root",
+      "ssh_password": "temproot",
+      "ssh_port": 22,
+      "storage": [
+        {
+          "disk_size": 25000,
+          "disk_thin_provisioned": true
+        }
+      ],
+      "type": "vsphere-iso",
+      "http_directory": "http",
+      "username": "youruser",
+      "vcenter_server": "vcenterip",
+      "vm_name": "c7_test_template_kubernetes"
+    }
+],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "./kubernetes_docker_server_setup.yml"
+    }
+  ],
+"post-processors": [
+{
+  "type": "vsphere-template",
+  "host": "vcenterip",
+  "insecure": true,
+  "username": "youruser",
+  "password": "yourpass",
+  "datacenter": "yourdatacenter",
+  "folder": "/Discovered virtual machine/"
+  }
+ ]
+}

@@ -1,0 +1,39 @@
+{
+"variables": {
+"apitoken":"yourapi",
+"spacekey": "space",
+"secret": "secret"
+},
+ "builders": [
+  {
+  "type": "digitalocean",
+  "api_token": "{{user `apitoken`}}",
+  "snapshot_name": "centos8_lite",
+  "image": "centos-8-x64",
+  "region": "fra1",
+  "snapshot_regions": ["fra1","ams3"],
+  "size": "s-1vcpu-1gb",
+  "ssh_username": "root"
+ }
+],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "./server-lite.yml"
+    }
+  ],
+  "post-processors": [
+{
+  "type": "digitalocean-import",
+  "api_token": "{{user `apitoken`}}",
+  "spaces_key": "{{user `spacekey`}}",
+  "spaces_secret": "{{user `secret`}}",
+  "spaces_region": "ams3",
+  "space_name": "space01",
+  "image_name": "centos8_lite",
+  "image_description": "Packer import",
+  "image_regions": ["fra1", "ams3"],
+  "image_tags": ["custom", "packer", "centos8-lite"]
+}
+  ]
+ }

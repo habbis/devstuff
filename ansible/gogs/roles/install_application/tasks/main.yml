@@ -1,0 +1,41 @@
+---
+- name: create install dir
+  file:
+    path: "{{ installPath }}"
+    state: directory
+    owner: root
+    group: root
+
+- name: create install dir
+  file:
+    path: "{{ VarLog }}"
+    state: directory
+    owner: "{{ user}}"
+    group: "{{ user}}"
+
+- name: check if path to gogs exist
+  stat:
+    path: "{{ tarpath }}"
+  register: tarpath
+
+- name: check if path to gogs exist
+  stat:
+    path: "{{ ln_path }}"
+  register: application_dir
+
+- name: Copy application
+  copy:
+    src: "{{ application }}"
+    dest: "{{ installPath }}"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  when: tarpath.stat.exists == False
+
+- name: Unarchive 
+  unarchive:
+    src: /opt/gogs/gogs_0.11.91_linux_amd64.tar.gz
+    dest: "{{ installPath }}"
+    #dest: /opt/gogs/gogs_0.11.91_linux_amd64.tar.gz
+    remote_src: yes
+  when: application_dir.stat.exists == False

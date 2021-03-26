@@ -1,0 +1,18 @@
+---
+
+## Configuration
+
+- name: Check if folder exist
+  stat:
+    path: /opt/DAM
+  register: folder
+
+
+- name: add user for gogs
+  user:
+    name: "{{ user }}"
+    shell: /bin/bash
+    #groups: admins
+    #append: yes
+    state: present
+  when: folder.stat.exists == False

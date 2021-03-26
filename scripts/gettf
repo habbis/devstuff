@@ -1,0 +1,54 @@
+#!/bin/bash
+#if test -d $HOME/devstuff/terraform
+#while getopts "aws:" OPTION
+
+        echo "terraform"
+        echo "copy aws config - or --aws"
+	echo "copy vultur config -vu or --vultur"
+	echo "copy digital_ocean -do or --digitalocean"
+	echo "copy copy all terraform config -t or --take-over-world"
+
+while [ ! $# -eq 0 ]
+do
+
+
+
+	case "$1" in
+        --help | -h)
+	echo "terraform"
+        echo "copy aws config -a or --aws"
+	echo "copy vultur config -vu or --vultur"
+	echo "copy digital_ocean -do or --digitalocean"
+	echo "copy copy all terraform config -t or --take-over-world"
+        exit
+        ;;
+	--take-over-world | -t)
+	#if ! test -d $/home/terraform
+	cd ~/devstuff/ #|| exit
+	cp -r terraform $HOME/
+	exit
+        ;;
+
+	--aws | -a)
+	cd ~/devstuff/ #|| exit
+	cp -r terraform/aws $HOME/
+	exit
+	;;
+
+	--vultur | -vu)
+	cd ~/devstuff/ #|| exit
+	cp -r terraform/vultr $HOME/
+	exit
+	;;
+
+	--digitalocean | -do)
+	cd ~/devstuff/ #|| exit
+	cp -r terraform/digital_ocean $HOME/
+	exit
+	;;
+
+
+
+esac
+shift
+done

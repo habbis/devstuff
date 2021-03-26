@@ -1,0 +1,19 @@
+---
+ - name: check if path to application exist
+   stat:
+     path: "{{ new_mntp }}"
+   register: application_dir
+
+ - name: install package ubuntu
+   shell: /tmp/ub_psql13.sh >> /var/log/psql_install_log
+   when: ansible_pkg_mgr == "apt" and application_dir.stat.exists == false
+
+ - name: install package yum
+   shell: /tmp/centos7_psql13.sh >> /var/log/psql_install_log
+   when: ansible_pkg_mgr == "yum" and application_dir.stat.exists == false
+
+
+ - name: install package yum
+   shell: /tmp/centos8_psql13.sh >> /var/log/psql_install_log
+   when: ansible_pkg_mgr == "dnf" and application_dir.stat.exists == false
+

@@ -1,0 +1,16 @@
+---
+
+- name: install packages debian/ubuntu
+  package: 
+    name:
+    - openssh-server
+    - git
+  when: ansible_pkg_mgr == "apt"
+
+- name: install packages centos/redhat
+  package: 
+    name:
+    - openssh-server
+    - git
+  when: ansible_pkg_mgr == "yum"
+

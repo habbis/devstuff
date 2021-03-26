@@ -1,0 +1,86 @@
+---
+- name: check if path to gogs exist
+  stat:
+    path: "{{ oldnamePath }}"
+  register: newnamedir
+
+- name: rename folder
+  command:  mv "{{ oldnamePath }}" "{{ newname }}"
+  when: newnamedir.stat.exists == True
+
+- name: check if path to gogs exist 
+  stat: 
+    path: "{{ ln_destpath }}"
+  register: ln_destpath
+
+# problems with ln
+- name: create symlinc for install dir
+  file:
+    src: "{{ ln_path }}"
+    dest: /opt/gogs/current
+    #src: /opt/gogs/atlassian-gogs-7.3.3 
+    #dest: /opt/gogs/current
+    #owner: root
+    #group: root
+    state: link
+
+- name: permissions install dir
+  file:
+    path: "{{ installPath }}"
+    #path: /opt/gogs/
+    state: directory
+    owner: "{{ admin }}"
+    group: "{{ admin }}"
+    #mode: 700
+
+- name: permissions install dir current
+  file:
+    path: "{{ ln_permissions }}"
+    #path: /opt/gogs/*
+    state: directory
+    owner: "{{ admin }}"
+    group: "{{ admin }}"
+    #mode: 700
+
+#- name: permissions conf dir
+#  file:
+#    path: "{{ conflocation }}"
+#    owner: "{{ user }}"
+#    group: "{{ user }}"
+    #mode: 700
+
+#- name: permissions temp dir
+#  file:
+#    path: "{{ templocation }}"
+#    owner: "{{ user }}"
+#    group: "{{ user }}"
+    #mode: 700
+    #
+#- name: permissions work dir
+#  file:
+#    path: "{{ worklocation }}"
+#    owner: "{{ user }}"
+#    group: "{{ user }}"
+    #mode: 700
+
+- name: create symlinc for var-log
+  file:
+    dest: /opt/gogs/current/logs
+    state: absent
+  #when: var-log|bool == False
+
+- name: create symlinc for var-log
+  file:
+    src: "{{ VarLog }}"
+    dest: /opt/gogs/current/logs
+    #owner: root
+    #group: root
+    state: link
+  #when: var-log|bool == False
+
+- name: permissions work dir 
+  file:
+    path: "{{ VarLog }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    #mode: 700

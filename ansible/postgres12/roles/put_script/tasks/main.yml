@@ -1,0 +1,39 @@
+---
+
+- name: check if path to application exist
+  stat:
+    path: "{{ new_mntp }}"
+  register: application_dir
+
+- name: put script to ubuntu
+  copy:
+    src: files/ub_psql13.sh
+    dest: /tmp/ub_psql13.sh
+    owner: root
+    group: root
+    mode: u=x,g=r,s=r
+    #remote_src: yes
+  when: ansible_pkg_mgr == "apt" and application_dir.stat.exists == false
+        #application_dir.stat.exists == False
+
+- name: put script to centos7
+  copy:
+    src: files/centos7_psql13.sh
+    dest: /tmp/centos7_psql13.sh
+    owner: root
+    group: root
+    mode: u=x,g=r,o=r
+    #remote_src: yes
+  when: ansible_pkg_mgr == "yum" and application_dir.stat.exists == false
+        #application_dir.stat.exists == False
+
+- name: put script to centos8
+  copy:
+    src: files/centos8_psql13.sh
+    dest: /tmp/centos8_psql13.sh
+    owner: root
+    group: root
+    mode: u=x,g=r,o=r
+    #remote_src: yes
+  when: ansible_pkg_mgr == "dnf" and application_dir.stat.exists == false
+        #application_dir.stat.exists == False

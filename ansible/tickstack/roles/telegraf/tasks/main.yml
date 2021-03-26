@@ -1,0 +1,18 @@
+---
+- name: install telegraf debian/ubuntu
+  apt:
+    deb: "{{ telegraf_deb }}"
+  when: ansible_pkg_mgr == "apt"
+
+- name: install telegraf rehl7
+  yum:
+    name: "{{ telegraf_rhel }}"
+    state: present
+  when: ansible_pkg_mgr == "yum"
+
+
+- name: install telegraf rhel8
+  yum:
+    name: "{{ telegraf_rhel }}"
+    state: present
+  when: ansible_pkg_mgr == "dnf"

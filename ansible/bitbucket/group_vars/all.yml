@@ -1,0 +1,48 @@
+# conflunce
+
+user: hf-git
+admin: root
+service: bitbucket
+
+
+storagePath: /var/bitbucket
+installPath: /opt/bitbucket/
+tarpath: /opt/bitbucket/atlassian-bitbucket-7.6.0.tar.gz
+#tarball: atlassian-bitbucket-7.6.0.tar.gz
+
+initfile: files/bitbucket.j2
+inid: /etc/init.d/bitbucket
+application: files/atlassian-bitbucket-7.6.0.tar.gz
+application_name: bitbucket
+
+ln_path: /opt/bitbucket/atlassian-bitbucket-7.6.0
+ln_destpath: /opt/bitbucket/current/
+ln_permissions: /opt/bitbucket/current/
+bitbucket_home=/var/bitbucket/data
+
+logPath: /opt/bitbucket/current/logs
+VarLog: /var/log/bitbucket
+
+conflocation: /opt/bitbucket/current/conf/Standalone/localhost
+templocation: /opt/bitbucket/current/temp
+worklocation: /opt/bitbucket/current/work
+
+# disk
+new_disk: /dev/sdb
+create_vgname: vg1
+create_lvname: VarBitbucket
+create_lvsize: 25G
+filesystem: xfs
+new_mntp: /var/bitbucket
+
+# must be set to true in order to execute any tasks in play (failsafe option :)- )
+#config_lvm: false
+config_lvm: true
+# set to true if creating a new logical volume (do not set extend or resize to true)
+#create: false
+create: true
+# set to true if resizing the logical volume (do not set create to true)
+#resize: false
+resize: true
+#extend: false
+extend: true

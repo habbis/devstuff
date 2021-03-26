@@ -1,0 +1,11 @@
+---
+- name: enable and start service
+  service:
+    name: sshd
+    state: started
+    enabled: yes
+
+- name: reload sshd
+  service:
+    name: sshd
+    state: reloaded

@@ -1,0 +1,16 @@
+# THe global options
+[DEFAULT]
+#Ban hosts for one hour:
+bantime = 1h
+# THis is know good ip no need to worry
+ignoreip = 10.16.1.0/24
+
+# user firewalld as firewall for fail2ban 
+banaction = firewallcmd-ipset
+# spesific options for ssdd
+[sshd]
+enabled = true
+#default port is 22
+port = ssh
+# logpath for this ban
+logpath = %(sshd_log)s

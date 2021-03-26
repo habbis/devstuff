@@ -1,0 +1,49 @@
+---
+- hosts: etherpad
+  remote_user: root
+  #remote_user: vagrant
+  #become: yes
+  #become_method: sudo
+  vars:
+    ln_npm: /opt/node/node-v12.19.0-linux-x64/bin/npm
+    ln_node: /opt/node/node-v12.19.0-linux-x64/bin/node
+    lnDestnpm: /usr/bin/npm
+    lnDestnode: /usr/bin/node
+    mkdir: /opt/node
+    tar:  https://nodejs.org/dist/v12.19.0/node-v12.19.0-linux-x64.tar.xz
+
+  tasks:
+  - name: create  install dir
+    file:
+      path: "{{ mkdir }}"
+      state: directory
+      owner: root
+      group: root
+
+  - name: Download node-lts
+    get_url:
+      url: "{{ tar }}"
+      dest: /opt/node/
+
+  - name: Extract file
+    unarchive:
+      src: /opt/node/node-v12.19.0-linux-x64.tar.xz
+      dest: /opt/node/
+      remote_src: yes
+
+# problems with ln
+  - name: create symlinc for npm
+    file:
+      src: "{{ ln_node }}"
+      dest: "{{ lnDestnode }}"
+      #owner: root
+      #group: root
+      state: link
+
+  - name: create symlinc for node
+    file:
+      src: "{{ ln_npm }}"
+      dest: "{{ lnDestnpm }}"
+      #owner: root
+      #group: root
+      state: link

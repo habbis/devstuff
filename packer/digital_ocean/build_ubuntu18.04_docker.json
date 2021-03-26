@@ -1,0 +1,19 @@
+{
+ "builders": [
+  {
+  "type": "digitalocean",
+  "api_token": "yourkey",
+  "snapshot_name": "ubuntu_18.04_docker",
+  "image": "ubuntu-18-04-x64",
+  "region": "fra1",
+  "size": "s-1vcpu-1gb",
+  "ssh_username": "root"
+ }
+],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "./docker_install.yml"
+    }
+  ]
+}

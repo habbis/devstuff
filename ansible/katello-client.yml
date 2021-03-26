@@ -1,0 +1,59 @@
+---
+- hosts: all
+  remote_user: root
+  #remote_user: vagrant
+  #become: yes
+  #become_method: sudo
+  vars:
+    katello_package: https://youlink/pub/katello-ca-consumer-latest.noarch.rpm
+    org: habbfarm
+    activationkey_dev: CentOS7_Dev
+    activationkey_test: CentOS7_Test
+    activationkey_prod: CentOS7_Prod
+    dev: false
+    test: false
+    prod: true
+    client: true
+    old_repos: true
+    client: https://yum.theforeman.org/client/2.0/el7/x86_64/foreman-client-release.rpm
+    packages: katello-host-tools katello-host-tools-tracer
+
+  tasks:
+  - name: install yum repo
+    yum:
+      name: subscription-manager
+      state: present
+
+  - name:
+    yum:
+      name: "{{ katello_package }}"
+      state: present
+    #when: client
+
+  - name: register subscription dev
+    command: subscription-manager register --org="habbfarm" --activationkey="CentOS7_Dev"
+    when: dev
+
+  - name: register subscription test
+    command: subscription-manager register --org="habbfarm" --activationkey="CentOS7_Test"
+    when: test
+
+  - name: register subscription prod
+    command: subscription-manager register --org="habbfarm" --activationkey="CentOS7_prod"
+    when: prod
+
+  - name: making backup of old yum repos
+    command: mkdir /etc/yum.repos.d/old ; mv /etc/yum.repos.d/CentOS-* /etc/yum.repos.d/old; mv /etc/yum.repos.d/epel* /etc/yum.repos.d/old
+    when: old_repos
+
+  - name: install yum repo
+    yum:
+      name: "{{ client }}"
+      state: present
+    when: client
+
+  - name: install client packages
+    yum: 
+      name: "{{ packages }}"
+      state: present
+    when: client

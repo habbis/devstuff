@@ -1,0 +1,50 @@
+---
+- name: create install dir
+  file:
+    path: "{{ installPath }}"
+    state: directory
+    owner: root
+    group: root
+
+- name: create install dir
+  file:
+    path: "{{ VarLog }}"
+    state: directory
+    owner: "{{ user}}"
+    group: "{{ user}}"
+
+- name: check if  tarpath exist
+  stat:
+    path: "{{ tarpath }}"
+  register: tarpath
+
+- name: check if path to application exist
+  stat:
+    path: "{{ ln_path }}"
+  register: application_dir
+
+
+- name: Copy application
+  copy:
+    src: "{{ application }}"
+    dest: "{{ installPath }}"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  when: tarpath.stat.exists == False
+
+- name: check if tarball exist
+  stat:
+    #path: "{{ tarpath }}"
+    path: /opt/bitucket/atlassian-bitbucket-7.6.0.tar.gz
+  register: tarball
+
+- name: Unarchive 
+  unarchive:
+    #src: "{{ tarpath }}"
+    src: /opt/bitbucket/atlassian-bitbucket-7.6.0.tar.gz
+    dest: "{{ installPath }}"
+    remote_src: yes
+#- name: Unarchive
+  #shell: tar xzvf "{{ tarpath }}"  "{{ installPath }}"
+  #when: tarball.exists == True

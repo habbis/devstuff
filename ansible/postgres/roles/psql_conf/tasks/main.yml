@@ -1,0 +1,19 @@
+---
+- name: place postgressql.conf
+  template:
+    src: "{{ template01 }}"
+    dest: "{{ conf_path }}"
+    owner: postgres
+    mode: u=rwx,g=r
+
+- name: place pq_hba.conf
+  template:
+    src: "{{ template02 }}"
+    dest: "{{ conf_path02 }}"
+    owner: postgres
+    mode: u=rwx,g=r
+
+- name: Restart service
+  service:
+    name: "{{ service }}"
+    state: restarted

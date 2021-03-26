@@ -1,0 +1,39 @@
+---
+ - name: Install packages ubuntu
+   package:
+     name:
+      #- cockpit
+       - python3-pip
+       - ansible
+       - git
+       - vim
+       - xvfb
+       - fontconfig
+     state: present
+   when: ansible_pkg_mgr == "apt"
+  #ignore_errors: yes
+  #
+ - name: Install packages yum
+   package:
+     name:
+      #- cockpit
+       - python3-pip
+       - centos-release-ansible-29
+       - git
+       - vim
+       - fontconfig
+     state: present
+   when: ansible_pkg_mgr == "yum"
+  #ignore_errors: yes
+
+ - name: install package ubuntu
+   package:
+     name: "{{ extern_package_ubuntu }}"
+     state: present
+   when: ansible_pkg_mgr == "apt"
+
+ - name: install package yum
+   package:
+     name: "{{ extern_package_centos }}"
+     state: present
+   when: ansible_pkg_mgr == "yum"

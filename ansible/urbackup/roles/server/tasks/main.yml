@@ -1,0 +1,44 @@
+---
+
+- name: add repo centos7
+  shell: wget "{{ centos7_repo }}"
+  args:
+    chdir: /etc/yum.repos.d/
+  when: ansible_pkg_mgr == "yum"
+
+- name: add repo  centos8
+  shell: wget "{{ centos8_repo }}"
+  args:
+    chdir: /etc/yum.repos.d/
+  when: ansible_pkg_mgr == "dnf"
+
+- name: install package centos8
+  package:
+    name: "{{ centos_package }}"
+    state: present
+  when: ansible_pkg_mgr == "dnf"
+
+- name: install package centos7
+  package:
+    name: "{{ centos_package }}"
+    state: present
+  when: ansible_pkg_mgr == "yum"
+
+- name: add repo ubuntu
+  apt_repository:
+    repo: "{{ apt_repo }}"
+    stage: present
+  when: ansible_pkg_mgr == "apt"
+
+- name: add key for repo ubuntu
+  apt_key:
+    url: "{{ apt_key }}"
+    state: present
+  when: ansible_pkg_mgr == "apt"
+
+- name: update and install ubuntu
+  apt:
+    name: "{{ apt_package }}"
+    state: present
+    update_cache: yes
+  when: ansible_pkg_mgr == "apt"

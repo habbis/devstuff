@@ -1,0 +1,20 @@
+---
+- name: setup extra pacakge #for ubuntu/debian centos 
+  vars_files:
+    - vars.yml
+  #include_vars:
+     #dir: group_vars
+  #gather_facts: no
+  gather_facts: yes
+  hosts: c7master
+  remote_user: root
+  #remote_user: user
+  #become: yes
+  #become_method: sudo
+
+  roles:
+    - add_package
+    - install_package
+    - service
+   #- puppet
+   #- pip

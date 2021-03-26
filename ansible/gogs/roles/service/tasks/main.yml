@@ -1,0 +1,19 @@
+---
+- name: place init script
+  copy:
+    src: "{{ initfile }}"
+    dest: "{{ inid }}"
+    owner: root
+    group: root
+    mode: u=x
+
+- name: enable and start service
+  service:
+    name:  "{{ service }}"
+    state: started
+    enabled: yes
+
+- name: start service 
+  service:
+    name: "{{ service }}"
+    state: started

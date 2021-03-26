@@ -1,0 +1,27 @@
+---
+- name: place init script
+  template:
+    src: "{{ initfile }}"
+    dest: "{{ inid }}"
+    owner: root
+    mode: u=rwx,g=r
+
+- name: add file to init
+  command: chkconfig --add "{{ application_name }}"
+  #copy:
+  #  src: "{{ initfile }}"
+  #  dest: "{{ inid }}"
+  #  owner: root
+  #  group: root
+  #  mode: u=x
+
+#- name: enable and start service
+  #service:
+    #name:  "{{ service }}"
+    #state: started
+    #enabled: yes
+
+#- name: start service 
+  #service:
+    #name: "{{ service }}"
+    #state: started

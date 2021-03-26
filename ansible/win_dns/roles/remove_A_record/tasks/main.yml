@@ -1,0 +1,9 @@
+---
+
+- name: Add A static record
+  win_dns_record:
+    name: "{{ hostname }}"
+    type: "A"
+    state: absent
+    zone: "{{ zone_name }}"
+

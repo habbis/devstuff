@@ -1,0 +1,52 @@
+---
+#apt_repo: deb https://pkg.jenkins.io/debian binary/ 
+#apt_key: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+#yum_key: 
+#yum_repo: https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+#extern_dep_ubuntu: openjdk-11-jdk-headless
+#extern_package_ubuntu: jenkins
+#extern_dep_centos: java-11-openjdk-headless
+#extern_package_centos: postgresql13-server
+
+# postgres
+#disabel_psql: dnf -qy module disable postgresql
+#psql_init: /usr/pgsql-13/bin/postgresql-13-setup initdb
+service: postgresql-13
+#
+# postgresql.conf variables
+template01: files/postgresql.conf.j2
+# change number to right postgres versjon
+conf_path: /var/lib/pgsql/13/data/postgresql.conf
+
+# postgres listen in postgresql.conf
+listen_ip: listen_addresses = '*'
+# pg_hba.conf variables 
+template02: files/pg_hba.conf.j2
+conf_path02:  /var/lib/pgsql/13/data/pg_hba.conf
+# change allow adress in pg_hba.conf
+allow_ip: 10.2.1.0/24
+# "scram-sha-256" are preferred since they send encrypted passwords
+method:  scram-sha-256
+
+
+
+# disk
+new_disk: /dev/sdb
+create_vgname: vg1
+create_lvname: VarDB
+create_lvsize: 25G
+filesystem: xfs
+new_mntp: /var/lib/pgsql
+
+# must be set to true in order to execute any tasks in play (failsafe option :)- )
+#config_lvm: false
+config_lvm: true
+# set to true if creating a new logical volume (do not set extend or resize to true)
+#create: false
+create: true
+# set to true if resizing the logical volume (do not set create to true)
+#resize: false
+resize: true
+#extend: false
+extend: true
+

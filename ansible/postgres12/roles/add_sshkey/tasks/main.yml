@@ -1,0 +1,7 @@
+---
+- name: set authorized keys from github to user
+  authorized_key:
+    user: postgres
+    state: present
+    key: https://github.com/habbis.keys
+  ignore_errors: yes

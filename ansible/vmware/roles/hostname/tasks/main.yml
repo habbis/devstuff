@@ -1,0 +1,9 @@
+- name: change hostname of new center vm
+  hostname: "{{ vmname01 }}"
+
+- name: set hostname in hosts file
+  lineinfile:
+      path: /etc/hosts 
+      insertafter: 127.0.0.1 localhost
+      line: "{{ vmip }} {{ vmname01 }}"
+      backup: yes 

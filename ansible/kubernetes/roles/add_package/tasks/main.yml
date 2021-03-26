@@ -1,0 +1,21 @@
+---
+- name: add key for package
+  apt_key:
+    url: "{{ apt_key }}"
+    state: present
+  when: ansible_pkg_mgr == "apt"
+
+- name: add  repo to bionic
+  apt_repository:
+    repo: "{{ apt_repo }}"
+    state: present
+  when: ansible_pkg_mgr == "apt"
+
+- name: Copy repo file 
+  copy: 
+    src: templates/kubernetes.repo
+    dest: /etc/yum.repos.d/kubernetes.repo
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  when: ansible_pkg_mgr == "yum"

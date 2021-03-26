@@ -1,0 +1,4 @@
+foreman_gpg: https://deb.theforeman.org/pubkey.gpg
+foreman_repo: deb http://deb.theforeman.org/ bionic 1.24
+foreman_plugin_repo: deb http://deb.theforeman.org/ plugins 1.24
+puppet_repo: https://apt.puppet.com/puppet6-release-bionic.deb

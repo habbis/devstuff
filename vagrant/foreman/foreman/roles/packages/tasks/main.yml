@@ -1,0 +1,9 @@
+---
+ - name: Install packages ansible and pip
+   package:
+      name:
+        #- cockpit
+        - python3-pip
+        - ansible
+      state: present
+   ignore_errors: yes

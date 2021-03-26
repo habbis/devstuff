@@ -1,0 +1,38 @@
+---
+
+- name: install mysql 8 centos8
+  yum:
+    name: https://dev.mysql.com/get/mysql80-community-release-el8-1.noarch.rpm
+    state: present
+  when:
+    - ansible_facts['distribution'] == "CentOS"
+    - ansible_facts['distribution_major_version'] == "8"
+
+
+- name: install mysql 8 centos7
+  yum:
+    name: https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
+    state: present
+  when:
+    - ansible_facts['distribution'] == "CentOS"
+    - ansible_facts['distribution_major_version'] == "7"
+
+- name: install mysql 8 ubuntu
+  apt:
+    deb: https://dev.mysql.com/get/mysql-apt-config_0.8.15-1_all.deb
+    state: present
+  when: ansible_pkg_mgr == "apt"
+
+- name: check if path to conflucence exist
+  stat:
+    path: /etc/my.cnf.d
+  register: mysql
+
+- name: Copy mysql conf
+  copy:
+    src: files/my.cnf
+    dest: /etc/
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  when: mysql.stat.exists == True

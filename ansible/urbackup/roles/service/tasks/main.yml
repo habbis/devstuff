@@ -1,0 +1,19 @@
+---
+#- name: check if init files exist·
+#  stat:
+#    #path: "{{ check_init }}"
+#    path: /usr/bin/urbackupsrv
+#  register: check_init
+
+- name: enable and start service
+  service:
+    name:  "{{ service }}"
+    state: started
+    enabled: yes
+#  when: check_init.stat.exist == True
+
+- name: start service 
+  service:
+    name: "{{ service }}"
+    state: started
+#  when: check_init.stat.exist == True

@@ -1,0 +1,38 @@
+
+
+admin: urbackup
+application: files/urbackup_client_linux_2.4.10.sh
+path: /usr/local/bin/urbackupclientctl
+installPath: /opt/urbackup_client_linux_2.4.10.sh
+backupPath: /mnt/backups/urbackup
+urbackupdir: /mnt/backups/urbackup
+check_init: /usr/bin/urbackupsrv
+service: urbackup-server
+
+# repo
+apt_repo: deb http://download.opensuse.org/repositories/home:/uroni/xUbuntu_20.04/
+apt_key: https://download.opensuse.org/repositories/home:uroni/xUbuntu_20.04/Release.key
+apt_package: urbackup-server
+centos8_repo: https://download.opensuse.org/repositories/home:uroni/CentOS_8/home:uroni.repo
+centos_package: urbackup-server
+centos7_repo: https://download.opensuse.org/repositories/home:uroni/CentOS_7/home:uroni.repo
+
+# disk
+new_disk: /dev/sdb
+create_vgname: vgbackup
+create_lvname: lvbackup
+create_lvsize: 15G
+filesystem: xfs
+new_mntp: /mnt/backups/
+
+# must be set to true in order to execute any tasks in play (failsafe option :)- )
+#config_lvm: false
+config_lvm: true
+# set to true if creating a new logical volume (do not set extend or resize to true)
+#create: false
+create: true
+# set to true if resizing the logical volume (do not set create to true)
+#resize: false
+resize: true
+#extend: false
+extend: true

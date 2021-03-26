@@ -1,0 +1,99 @@
+---
+
+#- name: check if path to conflucence exist 
+  #stat: 
+    #path: "{{ installPath }}"
+  #register: installdir
+
+- name: check if path to conflucence exist 
+  stat: 
+    path: "{{ ln_destpath }}"
+  register: ln_destpath
+
+# problems with ln
+- name: create symlinc for install dir
+  file:
+    src: "{{ ln_path }}"
+    dest: /opt/confluence/current
+    #src: /opt/confluence/atlassian-confluence-7.3.3 
+    #dest: /opt/confluence/current
+    #owner: root
+    #group: root
+    state: link
+
+#- name: create symlinc for install dir
+#  command: ln -s "{{ ln_path }}" "{{ ln_destpath }}"
+  #command: ln -s /opt/confluence/atlassian-confluence-7.3.3 /opt/confluence/current
+  #when: lnDestPath|bool == False
+
+#- name: Recursively remove directory
+#  file:
+#    path: "{{ logPath }}"
+#    state: absent
+
+- name: permissions install dir
+  file:
+    path: "{{ installPath }}"
+    #path: /opt/confluence/
+    state: directory
+    owner: "{{ admin }}"
+    group: "{{ admin }}"
+    #mode: 700
+   
+- name: permissions install dir current
+  file:
+    #path: "{{ installPath }}"
+    path: /opt/confluence/*
+    state: directory
+    owner: "{{ admin }}"
+    group: "{{ admin }}"
+    #mode: 700
+
+- name: permissions conf dir 
+  file:
+    path: "{{ conflocation }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    #mode: 700
+
+- name: permissions temp dir 
+  file:
+    path: "{{ templocation }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    #mode: 700
+    #
+- name: permissions work dir 
+  file:
+    path: "{{ worklocation }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    #mode: 700
+
+#- name: check if path to conflucence exist 
+#  stat: 
+#    path: "{{ lnDestPath }}"
+  #register: var-log
+
+
+- name: create symlinc for var-log
+  file:
+    dest: /opt/confluence/current/logs
+    state: absent
+  #when: var-log|bool == False
+
+- name: create symlinc for var-log
+  file:
+    src: "{{ VarLog }}"
+    dest: /opt/confluence/current/logs
+    #owner: root
+    #group: root
+    state: link
+  #when: var-log|bool == False
+
+- name: permissions work dir 
+  file:
+    path: "{{ VarLog }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    #mode: 700

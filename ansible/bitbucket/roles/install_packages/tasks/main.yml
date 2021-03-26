@@ -1,0 +1,15 @@
+---
+
+- name: install packages debian/ubuntu
+  package:
+    name:
+    - openjdk-11-jdk-headless
+    - fontconfig
+  when: ansible_pkg_mgr == "apt"
+
+- name: install packages centos/redhat
+  package:
+    name:
+    - java-11-openjdk-headless
+    - fontconfig
+  when: ansible_pkg_mgr == "yum"

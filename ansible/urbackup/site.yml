@@ -1,0 +1,15 @@
+---
+- name: setup application
+  gather_facts: yes
+  hosts: all
+  remote_user: root
+  #remote_user: user
+  #become: yes
+  #become_method: sudo
+
+  roles:
+    - lvm
+    - client
+    - server
+    - permissions
+    - service

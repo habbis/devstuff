@@ -1,0 +1,15 @@
+---
+- name: add key for foreman
+  apt_key:
+    url: "{{ foreman_gpg }}"
+    state: present
+
+- name: add foreman repo to bionic
+  apt_repository:
+    repo: "{{ foreman_repo }}"
+    state: present
+
+- name: add foreman repo plugin to bionic
+  apt_repository:
+    repo: "{{ foreman_plugin_repo }}"
+    state: present

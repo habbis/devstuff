@@ -1,0 +1,22 @@
+---
+apt_repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+apt_key:  https://packages.cloud.google.com/apt/doc/apt-key.gpg
+#yum_key: 
+yum_repo: /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat/jenkins.repo
+#extern_dep_ubuntu: openjdk-11-jdk-headless
+extern_package_ubuntu: kubeadm kubelet kubectl 
+#extern_dep_centos: java-11-openjdk-headless
+extern_package_centos: kubeadm kubelet kubectl 
+
+# repo link telegraf
+telegraf_deb: https://dl.influxdata.com/telegraf/releases/telegraf_1.15.1-1_amd64.deb
+telegraf_rhel: https://dl.influxdata.com/telegraf/releases/telegraf-1.15.1-1.x86_64.rpm
+# influxdb
+influx_deb: https://dl.influxdata.com/influxdb/releases/influxdb_1.8.1_amd64.deb
+influx_rhel: https://dl.influxdata.com/influxdb/releases/influxdb-1.8.1.x86_64.rpm
+# kapacitor
+kapacitor_deb: https://dl.influxdata.com/kapacitor/releases/kapacitor_1.5.6-1_amd64.deb
+kapacitor_rhel: https://dl.influxdata.com/kapacitor/releases/kapacitor-1.5.6-1.x86_64.rpm
+# chronograf
+chronograf_deb: https://dl.influxdata.com/chronograf/releases/chronograf_1.8.5_amd64.deb
+chronograf_rhel: https://dl.influxdata.com/chronograf/releases/chronograf-1.8.5.x86_64.rpm

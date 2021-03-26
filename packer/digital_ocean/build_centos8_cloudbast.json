@@ -1,0 +1,23 @@
+{
+"variables": {
+"apitoken":""
+},
+ "builders": [
+  {
+  "type": "digitalocean",
+  "api_token": "{{user `apitoken`}}",
+  "snapshot_name": "centos8_cloudbast",
+  "image": "centos-8-x64",
+  "region": "fra1",
+  "snapshot_regions": ["fra1","ams3"],
+  "size": "s-1vcpu-1gb",
+  "ssh_username": "root"
+ }
+],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "./cloudbast_setup.yml"
+    }
+  ]
+ }

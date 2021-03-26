@@ -1,0 +1,23 @@
+---
+- name: add key for package
+  apt_key:
+    url: "{{ apt_key }}"
+    state: present
+  when: ansible_pkg_mgr == "apt"
+
+- name: add  repo to bionic
+  apt_repository:
+    repo: "{{ apt_repo }}"
+    state: present
+  when: ansible_pkg_mgr == "apt"
+
+- name: add key for package yum
+  rpm_key:
+    key: "{{ yum_key }}"
+    state: present
+  when: ansible_pkg_mgr == "yum"
+
+- name: add  repo yum
+  command: wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat/jenkins.repo 
+  when: ansible_pkg_mgr == "yum"
+  #ignore_errors: yes

@@ -1,0 +1,19 @@
+{
+ "builders": [
+  {
+  "type": "digitalocean",
+  "api_token": "yourkey",
+  "snapshot_name": "centos7_lite",
+  "image": "centos-7-x64",
+  "region": "fra1",
+  "size": "s-1vcpu-1gb",
+  "ssh_username": "root"
+ }
+],
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "./server-lite.yml"
+    }
+  ]
+}

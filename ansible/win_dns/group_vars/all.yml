@@ -1,0 +1,5 @@
+# win_dns
+
+ hostname: yourname
+ ipv4: yourip
+ zone_name: test.example.com

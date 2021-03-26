@@ -1,0 +1,27 @@
+---
+
+- name: check if init files exist 
+  stat:
+    path: "{{ check_init }}"
+  register: check_init
+
+- name: Create a directory if it does not exist
+  command: mkdir -p "{{ urbackupdir }}"
+  when: check_init.stat.exists == True
+
+- name: check if path to backup dir exist
+  stat:
+    path: "{{ backupPath }}"
+  register: backupPath
+
+- name: permissions install dir
+  file:
+    path: /mnt/backups/
+    state: directory
+    recurse: yes
+    owner: "{{ admin }}"
+    group: "{{ admin }}"
+
+#- name: permissions  dir
+#  command: chown -R "{{ admin }}":"{{ admin }}" /mnt/backup/urbackup
+#  when: backupPath.stat.exists == True

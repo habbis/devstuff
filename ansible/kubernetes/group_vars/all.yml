@@ -1,0 +1,9 @@
+---
+apt_repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+apt_key:  https://packages.cloud.google.com/apt/doc/apt-key.gpg
+#yum_key: 
+yum_repo: /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat/jenkins.repo
+#extern_dep_ubuntu: openjdk-11-jdk-headless
+extern_package_ubuntu: kubeadm kubelet kubectl 
+#extern_dep_centos: java-11-openjdk-headless
+extern_package_centos: kubeadm kubelet kubectl 

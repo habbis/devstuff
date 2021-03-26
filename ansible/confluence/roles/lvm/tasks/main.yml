@@ -1,0 +1,51 @@
+---
+
+- name: Check if /dev/mapper/vg0-Opt exists
+  stat:
+    path: /dev/mapper/vg0-Opt
+  register: vg_Opt
+
+- name: extend if vg-Opt if it exist 
+  lvol:
+    vg: vg0
+    lvg: Opt
+    size: 5000
+    resizefs: true
+  #when: vg_Opt|bool == True
+  when: vg_Opt.stat.exists == True
+
+- name: installing lvm2
+  apt: name=lvm2 state=present
+  when: config_lvm and ansible_os_family == "Ubuntu"
+
+- name: installing lvm2
+  yum: name=system-storage-manager state=present
+  when: config_lvm and ansible_os_family == "CentOS"
+
+- name: installing scsitools
+  apt: name=scsitools state=present
+  when: config_lvm and ansible_os_family == "Ubuntu"
+
+- name: installing sg3_utils
+  yum: name=sg3_utils state=present
+  when: config_lvm and ansible_os_family == "CentOS"
+
+- name: rescanning for new disks
+  command: /sbin/rescan-scsi-bus
+  when: config_lvm and ansible_os_family == "Ubuntu"
+
+- name: creating new LVM volume group
+  lvg: vg={{ create_vgname }} pvs={{ new_disk }} state=present
+  when: create and config_lvm
+
+- name: creating new LVM logical volume
+  lvol: vg={{ create_vgname }} lv={{ create_lvname }} size={{ create_lvsize }}
+  when: create and config_lvm
+
+- name: creating new filesystem on new LVM logical volume
+  filesystem: fstype={{ filesystem }} dev=/dev/{{ create_vgname }}/{{ create_lvname }}
+  when: create and config_lvm
+
+- name: mounting new filesystem
+  mount: name={{ new_mntp }} src=/dev/{{ create_vgname }}/{{ create_lvname }} fstype={{ filesystem }} state=mounted
+  when: create and config_lvm

@@ -1,0 +1,12 @@
+---
+- name: setup windows server
+  gather_facts: yes
+  hosts: dc01
+  remote_user: Administrator
+  #remote_user: user
+  #become: yes
+  #become_method: sudo
+
+  roles:
+    - add_A_record
+    #- remove_A_record

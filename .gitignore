@@ -1,0 +1,12 @@
+.vagrant
+atlassian-confluence-7.3.3.tar.gz*
+atlassian-confluence-7.8.1.tar.gz
+atlassian-confluence*
+atlassian*
+hosts
+host
+.terraform
+terraform.tfstate
+terraform.tfstate.backup
+.terraform.tfstate.lock.info
+myplan

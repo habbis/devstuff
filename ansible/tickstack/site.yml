@@ -1,0 +1,71 @@
+---
+- name: setup telegraf
+  vars_files:
+    - vars.yml
+  #include_vars:
+     #dir: group_vars
+  #gather_facts: no
+  gather_facts: yes
+  hosts: telegraf
+  remote_user: root
+  #remote_user: user
+  #become: yes
+  #become_method: sudo
+
+  roles:
+    #- before_install
+    - telegraf
+
+
+- name: setup influxdb
+  vars_files:
+    - vars.yml
+  #include_vars:
+     #dir: group_vars
+  #gather_facts: no
+  gather_facts: yes
+  hosts: influxdb
+  remote_user: root
+  #remote_user: user
+  #become: yes
+  #become_method: sudo
+
+  roles:
+    #- before_install
+    - influxdb
+
+
+- name: setup kapacitor
+  vars_files:
+    - vars.yml
+  #include_vars:
+     #dir: group_vars
+  #gather_facts: no
+  gather_facts: yes
+  hosts: kapacitor
+  remote_user: root
+  #remote_user: user
+  #become: yes
+  #become_method: sudo
+
+  roles:
+    #- before_install
+    - kapacitor
+
+
+- name: setup chronograf
+  vars_files:
+    - vars.yml
+  #include_vars:
+     #dir: group_vars
+  #gather_facts: no
+  gather_facts: yes
+  hosts: chronograf
+  remote_user: root
+  #remote_user: user
+  #become: yes
+  #become_method: sudo
+
+  roles:
+    #- before_install
+    - chronograf

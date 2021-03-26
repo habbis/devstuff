@@ -1,0 +1,49 @@
+vcenter_hostname: vcenterip
+vcenter_username: youruser
+vcenter_password: yourpass
+esxi_hostname: 172.16.1.6
+datacenter_name: yourdatacenter
+cluster: cluster01
+pool: pool01
+datastore: darkstar_vmware01
+vmname: hf-wiki01
+vmname01: hf-jira01
+vmname02: hf-wikidb01
+vmname03: hf-pr-mariadb01
+vmname04: hf-pr-mariadb02
+vmname05: influx01
+vmname06: kapacitor01
+vmname07: repo01
+vmname08: chronograf
+vmname09: dam01
+# kubernetes master node
+mcpu: 2
+mram: 8100
+# kubernetes workernode
+wcpu: 2
+wram: 16000
+# ordinary vm
+ram: 8100
+cpu: 2
+#ram: 60000
+#guestOS01: centos7Guest
+#guestOS02: centos7Guest
+# vm role setting
+#network: bastion_mgmt
+network: bastion_mgmt
+network01: bastion_mgmt
+# all other vm0* setting
+# networks: test: 10.3.1.0 prepod: 10.2.1.0 prod: 10.2.1.0 LAN: 172.16.1.0 
+# network: dev: 10.13.1.0
+vmip: 10.3.1.10
+vmip02: 10.3.1.22
+nameserver: 10.3.1.1
+domain: habbis.trade
+# template list: ub18_config c7_config  c8_config
+#templateName: c7_test_template_docker
+templateName: c7_test_template_lite
+templateName01: c7_test_template_lite
+
+#folder: templates
+folder: vm
+#folder: ebbestad

@@ -1,0 +1,61 @@
+{
+  "builders": [
+    {
+      "CPUs": 2,
+      "RAM": 8100,
+      "RAM_reserve_all": false,
+      "cluster": "cluster01",
+      "convert_to_template": false,
+      "datacenter": "yourdatacenter",
+      "datastore": "darkstar_vmware01",
+      "disk_controller_type": "pvscsi",
+      "guest_os_type": "other4xLinux64Guest",
+      "host": "esxiip",
+      "insecure_connection": "true",
+      "iso_paths": [
+        "[iso] rancheros-vmware.iso"
+      ],
+      "network_adapters": [
+        {
+          "network": "test",
+          "network_card": "vmxnet3"
+        }
+      ],
+      "notes": "Build via Packer",
+      "password": "yourpass",
+      "resource_pool": "pool01",
+      "folder": "templates",
+      "ssh_username": "rancher",
+      "ssh_password": "rancher",
+      "ssh_wait_timeout": "60s",
+      "ssh_port": 22,
+      "storage": [
+        {
+          "disk_size": 25000,
+          "disk_thin_provisioned": true
+        }
+      ],
+      "type": "vsphere-iso",
+      "http_directory": "http",
+      "username": "youruser",
+      "vcenter_server": "vcenterip",
+      "vm_name": "rancheros_test_template"
+    }
+],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "cloud-config.yml",
+      "destination": "/tmp/cloud-config.yml"
+    },
+{
+
+  "type": "shell",
+  "inline": [
+      "sudo ros install -d /dev/sda -f -t generic -c /tmp/cloud-config-yml" 
+  ]
+ }
+ ]
+}
+
+

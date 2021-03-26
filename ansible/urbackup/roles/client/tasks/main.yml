@@ -1,0 +1,20 @@
+---
+- name: check if path  exist
+  stat:
+    path: "{{ path }}"
+  register: application_dir
+
+- name: Copy application
+  copy:
+    src: "{{ application }}"
+    dest: "{{ installPath }}"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  when: application_dir.stat.exists == False
+
+- name: install client
+  shell: echo Y | bash urbackup_client_linux_2.4.10.sh
+  args:
+    chdir: /opt/
+  when: application_dir.stat.exists == False

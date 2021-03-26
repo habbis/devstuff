@@ -1,0 +1,9 @@
+---
+- name: Install package ca-certificates
+  apt:
+    name: ca-certificates
+    state: present
+
+- name: Install puppet6 for foreman
+  apt:
+    deb: "{{ puppet_repo }}"

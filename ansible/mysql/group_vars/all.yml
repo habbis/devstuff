@@ -1,0 +1,24 @@
+# mysql
+
+mysql_root_password: yourpass
+mysql_port: 3306
+
+# disk
+new_disk: /dev/sdb
+create_vgname: vg1
+create_lvname: VarMysql
+create_lvsize: 15G
+filesystem: xfs
+new_mntp: /var/mysql
+
+# must be set to true in order to execute any tasks in play (failsafe option :)- )
+#config_lvm: false
+config_lvm: true
+# set to true if creating a new logical volume (do not set extend or resize to true)
+#create: false
+create: true
+# set to true if resizing the logical volume (do not set create to true)
+#resize: false
+resize: true
+#extend: false
+extend: true

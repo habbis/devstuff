@@ -1,0 +1,107 @@
+---
+
+- name: install mysql 8 centos8
+  dnf:
+    name: https://dev.mysql.com/get/mysql80-community-release-el8-1.noarch.rpm
+    state: present
+  when:
+    - ansible_pkg_mgr == "dnf"
+    #- ansible_facts['distribution'] == "CentOS"
+    #- ansible_facts['distribution_major_version'] == "8"
+
+
+- name: install mysql 8 centos7
+  yum:
+    name: https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
+    state: present
+  when:
+    - ansible_facts['distribution'] == "CentOS"
+    - ansible_facts['distribution_major_version'] == "7"
+
+- name: install mysql 8 ubuntu
+  apt:
+    deb: https://dev.mysql.com/get/mysql-apt-config_0.8.15-1_all.deb
+    state: present
+  when: ansible_pkg_mgr == "apt"
+
+- name: install mysql from package manager
+  package:
+    name:
+      - mysql-server
+      - mysql
+      - python3-PyMySQL
+    state: present
+  when: ansible_pkg_mgr == "yum"
+
+- name: install mysql from package manager
+  dnf:
+    name:
+      - mysql-server
+      - mysql
+      - python3-PyMySQL
+      - #python2-PyMySQL
+    state: present
+  when: ansible_pkg_mgr == "dnf"
+
+- name: install mysql from package manager
+  package:
+    name:
+      - mysql-server
+      - mysql
+      - python3-mysqldb
+    state: present
+  when: ansible_pkg_mgr == "apt"
+
+#- name: Create Mysql configuration file
+  #template: src=mysqld.cnf.j2 dest=/etc/mysql/mysql.conf.d/mysqld.cnf
+
+#- name: Create Mysql configuration file
+#  template: src=my.cnf.j2 dest=/etc/my.cnf
+
+- name: Start mysql
+  systemd:
+    name: mysqld
+    state: started
+    enabled: yes
+
+  # remeber to update the password
+- name: Set root password
+  mysql_user: 
+    name: root 
+    #host: "{{ item }}" 
+    host_all: yes
+    password: "{{ mysql_root_password }}"
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    check_implicit_admin: yes
+    priv: "*.*:ALL,GRANT"
+  #with_items:
+  #  - "{{ ansible_hostname }}"
+  #  - 127.0.0.1
+  #  - ::1
+  #  - localhost 
+
+ # remember to update password
+- name: Update config
+  template:
+    src: root.my.cnf
+    dest: /root/.my.cnf
+    owner: root
+    group: root
+
+
+- name: Remove test database
+  mysql_db: name=test state=absent
+
+- name: Delete anonymous users
+  mysql_user: user='' host=$item state=absent
+  with_items:
+    - "{{ ansible_hostname }}"
+    - 127.0.0.1
+    - ::1
+    - localhost
+
+- name: 10. Restart MySQL
+  service:
+    name: mysql
+    state: restarted

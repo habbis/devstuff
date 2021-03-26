@@ -1,0 +1,11 @@
+---
+- name: install packages pip
+  pip:
+    name:
+     #- youtube-dl
+     #- docker-compose
+     #- podman-compose
+      - yamllint
+      - ansible-lint
+      - ansible
+    executable: pip3

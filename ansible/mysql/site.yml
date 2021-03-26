@@ -1,0 +1,11 @@
+---
+- name: setup database
+  gather_facts: yes
+  hosts: c8node1
+  remote_user: root
+  #remote_user: user
+  #become: yes
+  #become_method: sudo
+
+  roles:
+    - mysql

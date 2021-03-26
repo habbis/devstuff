@@ -1,0 +1,7 @@
+- name: permissions install dir
+  file:
+    path: "{{ installPath }}"
+    owner: "{{ admin }}"
+    group: "{{ admin }}"
+    #mode: 700
+    state: directory

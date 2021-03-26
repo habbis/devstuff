@@ -1,0 +1,26 @@
+# conflunce
+
+user: gogs
+admin: root
+vgname: vg1
+service: gogs
+lvname: VarGogs
+device: /dev/mapper/vg1-VarGogs
+filesystem: xfs
+storagePath: /var/gogs
+installPath: /opt/gogs/
+oldnamePath: /opt/gogs/gogs
+tarpath: /opt/gogs/gogs_0.11.91_linux_amd64.tar.gz
+initfile: files/gogs
+inid: /etc/init.d/gogs
+application: files/gogs_0.11.91_linux_amd64.tar.gz
+newname: /opt/gogs/gogs_0.11.91
+ln_path: /opt/gogs/gogs_0.11.91
+ln_destpath: /opt/gogs/current
+ln_permissions: /opt/gogs/current/
+logPath: /opt/gogs/current/logs
+VarLog: /var/log/gogs
+
+conflocation: /opt/gogs/current/conf/Standalone/localhost
+templocation: /opt/gogs/current/temp 
+worklocation: /opt/gogs/current/work

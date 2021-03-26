@@ -1,0 +1,7 @@
+---
+apt_repo: deb https://pkg.jenkins.io/debian binary/ 
+apt_key:  https://pkg.jenkins.io/debian/jenkins.io.key 
+yum_key: https://pkg.jenkins.io/redhat/jenkins.io.key
+yum_repo: https://pkg.jenkins.io/redhat/jenkins.repo
+extern_dep: openjdk-11-jdk-headless
+extern_package: jenkins
